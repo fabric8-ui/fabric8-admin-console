@@ -8,7 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class SearchUserService {
 
-  private baseURL = `auth.openshift.com/api/search/users?q=`;
+  private baseURL = `auth.openshift.io/api/search/users?q=`;
   private apiResult;
   private result_Subscription: Subscription;
   // tslint:disable-next-line:max-line-length
@@ -20,11 +20,7 @@ export class SearchUserService {
     ) {
   }
 
-  public foo(user) {
-    this.get_users(user);
-  }
-
-  public get_users(username: string = null) {
+  public getusers(username: string = null) {
     if (username != null) {
       console.log('(in search-user Service) SUCCESS: received username ' + username + ' from app');
 
@@ -45,7 +41,7 @@ export class SearchUserService {
       this.apiResult = this.http.get(readyURL, {
        headers: new HttpHeaders().set('Authorization', `Bearer ${this.token}`)
       });
-      this.savedata.store_user(this.apiResult);
+      this.saveUser(this.apiResult);
     } else {
       console.log('(in search-user Service) ERROR: invalid username ' + username);
     }
@@ -54,7 +50,7 @@ export class SearchUserService {
   private saveUser(api_result: Observable<any>) {
 
     let users;
-    api_result.subscribe(
+    this.result_Subscription = api_result.subscribe(
       res => users = res,
       err => {
         console.log('(in search-user Service) ERROR: no response from server due either of the following reasons:');
@@ -65,10 +61,9 @@ export class SearchUserService {
       () => {
         console.log('(in search-user Service) SUCCESS: fetched users');
         console.log(users);
-      }
-      );
 
-    console.log('(in search-user Service) saving users in data-store');
-    this.savedata.store_user(users);
+        console.log('(in search-user Service) saving users in data-store');
+        this.savedata.store_user(users);
+      });
   }
 }

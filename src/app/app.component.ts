@@ -25,7 +25,7 @@ export class AppComponent {
       console.log('(in app Component) SUCCESS: recieved user ' + username);
       console.log('(in app Component) calling search-user service with username ' + username);
 
-      this.searchuserService.foo(username);
+      this.searchuserService.getusers(username);
 
     } else {
       console.log('(in app Component) ERROR: username not recieved from search component ' + username);

@@ -20,9 +20,9 @@ export class DataStoreService {
    * stores the username received in user_list
    */
   public store_user(users) {
-    console.log("store user")
-    console.log("users "+this.users);
+    console.log('store user');
+    console.log('users ' + this.users);
     this._users.next(users);
-    console.log('(in data-store) users saved'+this._users);
+    console.log('(in data-store) users saved' + this._users);
   }
 }

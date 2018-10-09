@@ -24,11 +24,9 @@ export class SearchUserComponent implements OnInit {
     } else {
       console.log('(in app Component) ERROR: username not recieved from search component ' + username);
     }
-    
   }
-  filterUser()
-  {
-    console.log("filtered");
+  filterUser() {
+    console.log('filtered');
   }
 
 }

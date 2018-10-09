@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataStoreService } from '../../services/data-store.service';
-import { SearchUserService } from "../../services/search-user.service";
+import { SearchUserService } from '../../services/search-user.service';
 import { log } from 'util';
 
 @Component({
@@ -9,75 +9,25 @@ import { log } from 'util';
   styleUrls: ['./show-user.component.css']
 })
 export class ShowUserComponent implements OnInit {
+  users;
   constructor(
     private store: DataStoreService,
-    private searchuserservices:SearchUserService
+    private searchuserservices: SearchUserService
   ) { }
-  
-  name:string[] = [];
-  email:string[]=[];
-  date:any[]=[];
-  update="updated-at";
-  sortByname()
-  {
-
-    this.searchuserservices.apiResult.subscribe(res => {
-     let i=0;
-     res.data.forEach(attributes => 
-      {
-        this.name[i]=res.data[i].attributes.username;
-       i++;
-     });
-     console.log(res.data);
-    });
-    this.name.sort();
-    for (let k = 0; k < this.name.length; k++) 
-    {
-      console.log(this.name[k]);
+  sortedArray: any;
+  sort(sortBy: string, order: string) {
+    if (order === 'desc') {
+      this.users.sort(function(a, b) {
+        return b.attributes[sortBy].localeCompare(a.attributes[sortBy], 'en', {sensitivity: 'base'}); // descending
+      });
+    } else if (order === 'asc') {
+      this.users.sort(function(a, b) {
+        return a.attributes[sortBy].localeCompare(b.attributes[sortBy], 'en', {sensitivity: 'base'}); // descending
+      });
     }
-    return this.name;
-  } 
-  byMail(){
-    this.searchuserservices.apiResult.subscribe(res => {
-      let i=0;
-      res.data.forEach(attributes => 
-       {
-         this.email[i]=res.data[i].attributes.email;
-        i++;
-      });
-    //  console.log(res.data);
-     });
-     this.email.sort();
-     for (let k = 0; k < this.email.length; k++) 
-     {
-       console.log(this.email[k]);
-     }
-     return this.email;
   }
-
-  byDate()
-  {
-    this.searchuserservices.apiResult.subscribe(res => 
-      {
-        
-      let i=0;
-      res.data.forEach(attributes => 
-       {
-         console.log("dating.."+res.data[i].attributes.update)
-         this.date[i]=res.data[i].attributes.update;
-        i++;
-      });
-     });
-     this.date.sort();
-     for (let k = 0; k < this.date.length; k++) 
-     {
-       console.log(this.date[k]);
-     }
-     return this.date;
-  }
-  
-
   ngOnInit() {
+    this.store.users.subscribe(users => this.users = users);
   }
 
 }

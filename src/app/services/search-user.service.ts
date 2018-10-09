@@ -30,11 +30,8 @@ export class SearchUserService implements OnDestroy {
         console.log('(in search-user Service) calling API with URL ' + readyURL);
         this.apiResult = this.http.get(readyURL);
         this.saveUser(this.apiResult);
-        console.log("printing user data");
+        console.log('printing user data"');
         console.log(this.apiResult);
-        
-        
-        
       } else {
         console.log('(in search-user Service) ERROR: invalid username ' + username);
       }
@@ -44,7 +41,7 @@ export class SearchUserService implements OnDestroy {
     }
   }
 
-  private saveUser(api_result: Observable<any>){
+  private saveUser(api_result: Observable<any>) {
 
     this.result_Subscription = api_result.subscribe(
       res => {

@@ -18,7 +18,7 @@ export class LoginService {
     private router: Router,
     @Inject(AUTH_API_URL) private authApiUrl: string
   ) {
-    this.broadcaster.on('authenticationError').subscribe(() => {
+      this.broadcaster.on('authenticationError').subscribe(() => {
       this.logout();
     });
   }

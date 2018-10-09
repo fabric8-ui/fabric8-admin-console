@@ -9,7 +9,7 @@ import { AUTH_API_URL } from 'ngx-login-client';
 })
 export class SearchUserService implements OnDestroy {
 
-  private apiResult;
+  public apiResult;
   private result_Subscription: Subscription;
 
   constructor(
@@ -28,9 +28,10 @@ export class SearchUserService implements OnDestroy {
       if (username !== '') {
 
         console.log('(in search-user Service) calling API with URL ' + readyURL);
-
         this.apiResult = this.http.get(readyURL);
         this.saveUser(this.apiResult);
+        console.log('printing user data"');
+        console.log(this.apiResult);
       } else {
         console.log('(in search-user Service) ERROR: invalid username ' + username);
       }

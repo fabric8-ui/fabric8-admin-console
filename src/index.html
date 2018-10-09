@@ -14,5 +14,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
+  <script>
+      // Initialize Popovers
+      $(document).ready(function() {
+        $('[data-toggle=popover]').popovers()
+          .on('hidden.bs.popover', function (e) {
+            $(e.target).data('bs.popover').inState.click = false;
+          });
+      });
+    </script>
 </body>
 </html>

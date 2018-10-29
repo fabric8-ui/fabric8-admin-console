@@ -1,15 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { User } from 'ngx-login-client';
-import { ListConfig } from 'patternfly-ng';
-import { Filter } from 'patternfly-ng';
-import { FilterConfig } from 'patternfly-ng';
-import { FilterField } from 'patternfly-ng';
-import { FilterEvent } from 'patternfly-ng';
-import { FilterType } from 'patternfly-ng';
-import { SortConfig } from 'patternfly-ng';
-import { SortField } from 'patternfly-ng';
-import { SortEvent } from 'patternfly-ng';
-import { ToolbarConfig } from 'patternfly-ng';
+import { ListConfig, Filter, FilterConfig, FilterField, FilterEvent, FilterType, SortConfig, SortEvent,
+   ToolbarConfig, SortField} from 'patternfly-ng';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
@@ -22,7 +14,7 @@ export class UsersListComponent implements OnInit, OnChanges {
   listConfig: ListConfig;
   filterConfig: FilterConfig;
   filtersText: String = '';
-  items: any[];
+  items: User[];
   isAscendingSort: Boolean = true;
   separator: Object;
   sortConfig: SortConfig;
@@ -65,13 +57,10 @@ export class UsersListComponent implements OnInit, OnChanges {
     } as ToolbarConfig;
 
   }
-
   ngOnChanges(changes: SimpleChanges) {
     this.items = changes.users.currentValue;
   }
-
    // Filter
-
    applyFilters(filters: Filter[]): void {
     this.items = [];
     if (filters && filters.length > 0) {
@@ -85,7 +74,6 @@ export class UsersListComponent implements OnInit, OnChanges {
     }
     this.toolbarConfig.filterConfig.resultsCount = this.items.length;
   }
-
   // Handle filter changes
   filterChanged($event: FilterEvent): void {
     this.filtersText = '';
@@ -94,7 +82,6 @@ export class UsersListComponent implements OnInit, OnChanges {
     });
     this.applyFilters($event.appliedFilters);
   }
-
   matchesFilter(item: any, filter: Filter): boolean {
     let match = true;
     const re = new RegExp(filter.value, 'i');
@@ -105,7 +92,6 @@ export class UsersListComponent implements OnInit, OnChanges {
     }
     return match;
   }
-
   matchesFilters(item: any, filters: Filter[]): boolean {
     let matches = true;
     filters.forEach((filter) => {
@@ -116,8 +102,6 @@ export class UsersListComponent implements OnInit, OnChanges {
     });
     return matches;
   }
-
-
   // Sort
   compare(item1: any, item2: any): number {
     let compValue = 0;
@@ -126,13 +110,11 @@ export class UsersListComponent implements OnInit, OnChanges {
     } else if (this.currentSortField.id === 'email') {
       compValue = item1.attributes.email.localeCompare(item2.attributes.email);
     }
-
     if (!this.isAscendingSort) {
       compValue = compValue * -1;
     }
     return compValue;
   }
-
   // Handle sort changes
   sortChanged($event: SortEvent): void {
     this.currentSortField = $event.field;

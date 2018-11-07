@@ -29,9 +29,10 @@ export class UsersContainerComponent implements OnInit, OnDestroy {
         .subscribe((users: User[]) => {
           this.users = users;
           this.userStore.addUsers(users);
+          this.isSubscriptionError = false;
         },
          err => {
-          this.isSubscriptionError = false;
+          this.isSubscriptionError = true;
         }
       )
     );

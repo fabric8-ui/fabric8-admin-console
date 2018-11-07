@@ -1,8 +1,13 @@
 <div class="col-md-12">
   <app-search-bar (search)="searchUsers($event)">
   </app-search-bar>
-  <div *ngIf="errorMessage; else showUsers">
+  <div *ngIf="isSubscriptionError; else showUsers">
     <h3>Could not fetch Users !!</h3>
+    <h5>Here are few things you may try-- </h5>
+    <ul>
+      <li>Try Again</li>
+      <li>Check your network connection</li>
+    </ul>
   </div>
   <ng-template #showUsers>
     <app-users-list [users]="users"></app-users-list>

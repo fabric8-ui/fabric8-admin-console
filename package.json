@@ -26,6 +26,7 @@
     "patternfly": "^3.54.8",
     "patternfly-ng": "^4.5.1",
     "rxjs": "~6.2.0",
+    "rxjs-compat": "^6.3.3",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

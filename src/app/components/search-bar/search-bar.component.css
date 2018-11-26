@@ -1,6 +1,8 @@
-.search {
-    border-radius: 50px;
-    margin: auto;
-    margin-top: 50px;
-    width: 40%;
+.searchbox {
+    height: 54px;
+    font-size: 40px;
+}
+
+.searchbar {
+    margin-top: 90px;    
 }

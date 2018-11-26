@@ -1,7 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService, User } from 'ngx-login-client';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { User, AUTH_API_URL, AuthenticationService } from 'ngx-login-client';
+import { Subscription, Observable, of } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { UserStore } from '../../store/user.store';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ADMIN_API_URL } from 'src/app/shared/admin-api';
 
 @Component({
   selector: 'app-users-container',
@@ -13,19 +16,27 @@ export class UsersContainerComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   users: User[];
   isSubscriptionError: boolean;
+  private headers = new HttpHeaders({
+    'Authorization': `Bearer ${this.authService.getToken()}`
+});
+  private searchUrl: string;
 
   constructor(
-    private userService: UserService,
-    private userStore: UserStore
-   ) { }
+    private http: HttpClient,
+    // private userService: UserService,
+    private userStore: UserStore,
+    private authService: AuthenticationService,
+    @Inject(ADMIN_API_URL) adminUrl: string
+   ) {
+    this.searchUrl = adminUrl + 'search/users?page%5Blimit%5D=10&q=';
+    }
 
   ngOnInit() {
   }
 
   searchUsers(searchTerm: string): void {
     this.subscriptions.add(
-      this.userService
-        .getUsersBySearchString(searchTerm)
+      this.getUsersByName(searchTerm)
         .subscribe((users: User[]) => {
           this.users = users;
           this.userStore.addUsers(users);
@@ -35,6 +46,17 @@ export class UsersContainerComponent implements OnInit, OnDestroy {
         }
       )
     );
+  }
+  getUsersByName(searchTerm: string): Observable<User[]> {
+    if (searchTerm && searchTerm !== '') {
+      return this.http
+        .get(this.searchUrl +
+        encodeURIComponent(searchTerm), {headers: this.headers})
+        .pipe(
+          map((response: {data: User[]}) => response.data)
+        );
+    }
+    return of([]);
   }
 
   ngOnDestroy() {

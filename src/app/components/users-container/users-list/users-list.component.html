@@ -1,23 +1,20 @@
-<div class="user-list" *ngIf="users?.length > 0 ; else noUser">
+<div class="toolbar" *ngIf="users?.length > 0 ; else noUser" >
   <!--toolbar starts -->
   <div class="container-fluid">
     <div class="row toolbar-pf">
-      <div class="col-sm-12">
+      <div class="col-sm-12 toolbar">
         <pfng-toolbar [config]="toolbarConfig" (onFilterChange)="filterChanged($event)" (onSortChange)="sortChanged($event)"></pfng-toolbar>
       </div>
     </div>
   </div>
+</div>
   <!--toolbar ends-->
   <!-- User List starts -->
-  <div class="padding-15">
+  <div class="padding-15 userlist" *ngIf="users?.length > 0 ; else noUser" appInfiniteScroll>
     <div class="row">
       <div class="col-sm-12">
         <div class="form-group">
-          <pfng-list
-            [config]="listConfig"
-            [expandTemplate]="expandTemplate"
-            [items]="items"
-            [itemTemplate]="itemTemplate">
+          <pfng-list [config]="listConfig" [expandTemplate]="expandTemplate" [items]="items" [itemTemplate]="itemTemplate">
             <ng-template #itemTemplate let-item="item">
               <div class="list-pf-left">
                 <span class="fa list-pf-icon list-pf-icon-bordered list-pf-icon-small">
@@ -49,7 +46,7 @@
                   <strong>Bio: </strong>
                   <span *ngIf="item.attributes.bio; else noBio "> {{item.attributes.bio}}</span>
                   <ng-template #noBio>No Bio found.</ng-template>
-              </li>
+                </li>
                 <li>
                   <span>
                     <strong>User ID: </strong> {{item.attributes.userID}}
@@ -68,7 +65,7 @@
     </div>
   </div>
   <!--Expandion Ends-->
-</div>
+
 <ng-template #noUser>
   <div *ngIf="users">
     <pfng-toast-notification [header]="header" [message]="message" [type]="type"></pfng-toast-notification>

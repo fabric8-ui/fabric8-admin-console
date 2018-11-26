@@ -16,7 +16,8 @@ import { UserStore } from './store/user.store';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ListModule, ToolbarModule, FilterModule, ToastNotificationModule } from 'patternfly-ng';
 import { FormsModule } from '@angular/forms';
-
+import { InfiniteScrollModule } from './directive/infinitescroll.module';
+import { ADMIN_API_URL } from './shared/admin-api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { FormsModule } from '@angular/forms';
     FilterModule,
     FormsModule,
     ToolbarModule,
-    ToastNotificationModule
+    ToastNotificationModule,
+    InfiniteScrollModule
   ],
   providers: [
     AuthenticationService,
@@ -47,9 +49,9 @@ import { FormsModule } from '@angular/forms';
     { provide: AUTH_API_URL, useValue: 'https://auth.prod-preview.openshift.io/api/' },
     { provide: SSO_API_URL, useValue: 'https://sso.prod-preview.openshift.io/api/' },
     { provide: WIT_API_PROXY, useValue: 'https://prod-preview.openshift.io/api/' },
+    {provide : ADMIN_API_URL, useValue: 'https://admin-console.api.prod-preview.openshift.io/api/'}, // Admin Console api
     { provide: REALM, useValue: 'realm' },
-    UserStore,
-    ToastNotificationModule
+    UserStore
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

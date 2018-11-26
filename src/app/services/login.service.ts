@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { AUTH_API_URL, AuthenticationService } from 'ngx-login-client';
 import { Router } from '@angular/router';
 import { Broadcaster } from 'ngx-base';
+import { ADMIN_API_URL } from '../shared/admin-api';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class LoginService {
     private authService: AuthenticationService,
     private broadcaster: Broadcaster,
     private router: Router,
-    @Inject(AUTH_API_URL) private authApiUrl: string
+    @Inject(ADMIN_API_URL) private adminApiUrl: string
   ) {
     this.broadcaster.on('authenticationError').subscribe(() => {
       this.logout();
@@ -25,7 +26,7 @@ export class LoginService {
 
   redirectToAuth(): void {
     const redirectUrl = encodeURIComponent(window.location.href);
-    const loginUrl = `${this.authApiUrl}login?redirect=${redirectUrl}`;
+    const loginUrl = `${this.adminApiUrl}login?redirect=${redirectUrl}`;
     window.location.href = loginUrl;
   }
 
@@ -52,9 +53,10 @@ export class LoginService {
     }
 
     if (result['token_json']) {
-      console.log(result);
+      console.log('Token is :' + result);
       // Handle the case that this is a login
       this.authService.logIn(result['token_json']);
+      console.log('token is :' + result);
       // Navigate back to the current URL to clear up the query string
       // this.router.navigateByUrl(this.router.url);
     } else if (this.authService.isLoggedIn()) {

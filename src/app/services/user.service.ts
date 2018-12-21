@@ -38,10 +38,10 @@ export class UserService {
   }
 
   getUsersByName(searchTerm: string): Observable < User[] > {
-    const params = new HttpParams().set('q', searchTerm);
+    const params = this.searchUrl + `q=${searchTerm}`;
     if (searchTerm && searchTerm !== '') {
       return this.http
-        .get<{data: User[]}>(this.searchUrl, {params, headers: this.headers})
+        .get<{data: User[]}>(params, {headers: this.headers})
         .pipe(
           map((res => res.data))
         );

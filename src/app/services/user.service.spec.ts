@@ -18,9 +18,9 @@ describe('Service: User service', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        { provide: AUTH_API_URL, useValue: 'http://auth.example.com/' },
-        { provide: SSO_API_URL, useValue: 'http://sso.example.com/auth' },
-        { provide: WIT_API_PROXY, useValue: 'http://wit.example.com'},
+        { provide: AUTH_API_URL, useValue: 'https://auth.example.com/' },
+        { provide: SSO_API_URL, useValue: 'https://sso.example.com/auth' },
+        { provide: WIT_API_PROXY, useValue: 'https://wit.example.com'},
         { provide: ADMIN_API_URL, useValue: 'https://admin.example.com/api/'},
         { provide: REALM, useValue: 'realm' },
         Broadcaster,
